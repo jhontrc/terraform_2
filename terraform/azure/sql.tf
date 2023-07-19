@@ -39,6 +39,7 @@ resource "azurerm_mssql_server_security_alert_policy" "example" {
     "Data_Exfiltration"
   ]
   retention_days = 20
+  email_account_admins = true
 }
 
 resource "azurerm_mysql_server" "example" {
@@ -56,8 +57,8 @@ resource "azurerm_mysql_server" "example" {
   auto_grow_enabled                 = true
   backup_retention_days             = 7
   infrastructure_encryption_enabled = true
-  public_network_access_enabled     = true
-  ssl_enforcement_enabled           = false
+  public_network_access_enabled     = false
+  ssl_enforcement_enabled           = true
   tags = {
     git_commit           = "81738b80d571fa3034633690d13ffb460e1e7dea"
     git_file             = "terraform/azure/sql.tf"
@@ -68,6 +69,7 @@ resource "azurerm_mysql_server" "example" {
     git_repo             = "terragoat"
     yor_trace            = "1ac18c16-09a4-41c9-9a66-6f514050178e"
   }
+  ssl_minimal_tls_version_enforced = "TLS1_2"
 }
 
 resource "azurerm_postgresql_server" "example" {
@@ -82,7 +84,7 @@ resource "azurerm_postgresql_server" "example" {
   administrator_login          = "terragoat"
   administrator_login_password = "Aa12345678"
   version                      = "9.5"
-  ssl_enforcement_enabled      = false
+  ssl_enforcement_enabled      = true
   tags = {
     git_commit           = "81738b80d571fa3034633690d13ffb460e1e7dea"
     git_file             = "terraform/azure/sql.tf"
