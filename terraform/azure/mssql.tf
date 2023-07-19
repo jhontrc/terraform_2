@@ -15,6 +15,7 @@ resource "azurerm_storage_account" "security_storage_account" {
     git_repo             = "terragoat"
     yor_trace            = "4b504d4d-608c-45fe-ae56-807bde6d969f"
   }
+
 }
 
 resource "azurerm_mssql_server" "mssql1" {
@@ -53,6 +54,13 @@ resource "azurerm_mssql_server" "mssql2" {
     git_repo             = "terragoat"
     yor_trace            = "096d2cf2-6d47-41b2-9418-cdedea85e184"
   }
+
+  extended_auditing_policy {
+      storage_endpoint            = azurerm_storage_account.mssql2.primary_blob_endpoint
+      storage_account_access_key  = azurerm_storage_account.mssql2.primary_access_key
+      storage_account_access_key_is_secondary = true
+ +       retention_in_days                       = <120 or greater>
+    }
 }
 
 resource "azurerm_mssql_server" "mssql3" {
